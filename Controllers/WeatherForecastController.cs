@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using ConnectingApp.API.Data;
 using ConnectingApp.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ConnectingApp.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("/api/[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -26,6 +28,7 @@ namespace ConnectingApp.API.Controllers
         }
 
         // get all values
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetValues()
         {
