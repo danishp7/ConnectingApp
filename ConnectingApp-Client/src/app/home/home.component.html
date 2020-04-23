@@ -1,0 +1,21 @@
+<div class="container mt-5">
+  <div *ngIf="!isRegistered" class="text-center">
+    <h1>Find your match</h1>
+    <p class="lead">View your matches by sigining up!!!</p>
+    <div class="text-center">
+      <button class="btn btn-info btn-lg mr-2" (click)="IsRegistered()">Register</button>
+      <button class="btn btn-success btn-lg">Learn more</button>
+    </div>
+  </div>
+
+  <div *ngIf="isRegistered" class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <!--to pass the data to nested component we use [valuesFromParent]="values"-->
+        <!--to get the data from child component we use (cancelRegistration)="cancelRegistration()"
+            where cancelRegistration() is method inside home component which is parent component-->
+        <app-register [valuesFromParent]="values" (cancelRegistration)="cancelRegistration($event)"></app-register>
+      </div>
+    </div>
+  </div>
+</div>
