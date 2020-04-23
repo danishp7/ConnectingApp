@@ -59,6 +59,9 @@ namespace ConnectingApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> login(LoginDto loginCreds)
         {
+            // for demo purpose we thro exception here
+            // throw new Exception("computer says no!!!!");
+
             // first we check if user exist or not
             var user = await _repo.Login(loginCreds.UserName.ToLower(), loginCreds.Password);
             if (user == null)

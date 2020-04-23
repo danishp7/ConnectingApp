@@ -15,6 +15,7 @@
   <ItemGroup>
     <None Remove="ConnectingApp-Client\src\app\_service\auth.service.ts" />
     <None Remove="ConnectingApp-Client\src\app\_service\auth.ts" />
+    <None Remove="ConnectingApp-Client\src\app\_service\error.interceptor.ts" />
   </ItemGroup>
 
   <ItemGroup>
