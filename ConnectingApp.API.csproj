@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ConnectingApp-Client\src\app\_service\alertify.service.ts" />
     <None Remove="ConnectingApp-Client\src\app\_service\auth.service.ts" />
     <None Remove="ConnectingApp-Client\src\app\_service\auth.ts" />
     <None Remove="ConnectingApp-Client\src\app\_service\error.interceptor.ts" />
@@ -39,6 +40,12 @@
 
   <ItemGroup>
     <Folder Include="ConnectingApp-Client\src\app\value\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Update="ConnectingApp-Client\src\app\_service\alertify.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
 
 
