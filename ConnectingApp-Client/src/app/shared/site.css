@@ -42,3 +42,15 @@
 ::placeholder {
     color: #123654 !important;
 }
+a {
+  color: #123654 !important;
+  font-weight: 900 !important;
+}
+  a:hover {
+    color: #77bfc7 !important;
+    font-weight: 900 !important;
+    background-color: #123654 !important;
+  }
+.nav-item.active {
+  border: 2px solid #123654 !important;
+}

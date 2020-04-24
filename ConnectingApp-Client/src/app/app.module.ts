@@ -12,6 +12,9 @@ import { ValueComponent } from './value/value.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { MemberListComponent } from './member-list/member-list.component';
+import { MessagesComponent } from './messages/messages.component';
+import { UserListComponent } from './user-list/user-list.component';
  
 
 @NgModule({
@@ -20,7 +23,10 @@ import { RegisterComponent } from './register/register.component';
     ValueComponent,
     NavbarComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    MemberListComponent,
+    MessagesComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
