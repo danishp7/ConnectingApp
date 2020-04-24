@@ -1,20 +1,20 @@
 <form #registerForm="ngForm" (ngSubmit)="register()">
-  <h2 class="text-center text-primary">Sign Up</h2>
+  <h2 class="text-center text-color">Sign Up</h2>
   <hr>
 
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Username" name="username" required #username="ngModel" [(ngModel)]="model.username">
+    <input type="text" class="form-control input-text-settings" placeholder="Username" name="username" required #username="ngModel" [(ngModel)]="model.username">
     <div class="text-danger" *ngIf="username.touched && username.invalid && username.errors.required"></div>
   </div>
 
   <div class="form-group">
-    <input type="password" class="form-control" placeholder="Password" name="password" required #password="ngModel" [(ngModel)]="model.password">
+    <input type="password" class="form-control input-text-settings" placeholder="Password" name="password" required #password="ngModel" [(ngModel)]="model.password">
     <div class="text-danger" *ngIf="password.touched && password.invalid && password.errors.required"></div>
   </div>
 
   <div class="form-group text-center">
-    <button class="btn btn-info mr-2" type="submit">Register</button>
-    <button class="btn btn-danger" type="button" (click)="cancel()">Cancel</button>
+    <button class="btn btn-info mr-2" type="submit"><i class="fa fa-user-plus fa-1x mr-2"></i>Register</button>
+    <button class="btn btn-danger" type="button" (click)="cancel()"><i class="fa fa-close fa-1x mr-2"></i>Cancel</button>
   </div>
   <!-- this is for example to show the data coming from parent component
     <div class="row">

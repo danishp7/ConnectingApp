@@ -5,7 +5,7 @@ import { AlertifyService } from '../_service/alertify.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['../shared/site.css']
 })
 export class RegisterComponent implements OnInit {
 

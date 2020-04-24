@@ -6,7 +6,7 @@ import { AlertifyService } from '../_service/alertify.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['../shared/site.css']
 })
 export class NavbarComponent implements OnInit {
   model: auth = new auth();
