@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using ConnectingApp.API.Data;
 using ConnectingApp.API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace ConnectingApp.API
 {
@@ -39,7 +42,10 @@ namespace ConnectingApp.API
             // to support quick reload on views on changing html
             services.AddControllersWithViews();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+            // to resolve self refence loop
+            // we need to install microsoft.aspnetcore.mvc.newtonsoft
+                .AddNewtonsoftJson(a => a.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             // to add dbcontext
             services.AddDbContext<DataContext>(cfg => cfg.UseSqlServer(_config.GetConnectionString("ConnectingAppConnectionString")));
@@ -47,8 +53,13 @@ namespace ConnectingApp.API
             // to resolve cors problem
             services.AddCors();
 
-            // to add repository
+            // to add automapper
+            // we must specify assembly for automapper
+            services.AddAutoMapper(typeof(UserRepository).Assembly);
+
+            // to add repositories
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             // to tell efcore that we are using jwt bearer token as authentication
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
