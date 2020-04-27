@@ -20,6 +20,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 
 
 // first we get the token from local storage
@@ -38,7 +39,8 @@ export function getToken() {
     MessagesComponent,
     UserListComponent,
     MemberCardComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,

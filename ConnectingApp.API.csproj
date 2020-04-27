@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ConnectingApp-Client\src\app\_guards\prevent-unsaved-changes.guard.ts" />
+    <None Remove="ConnectingApp-Client\src\app\_resolvers\member-detail.resolver.ts" />
+    <None Remove="ConnectingApp-Client\src\app\_resolvers\member-edit.resolver.ts" />
+    <None Remove="ConnectingApp-Client\src\app\_resolvers\member-list.resolver.ts" />
     <None Remove="ConnectingApp-Client\src\app\_service\alertify.service.ts" />
     <None Remove="ConnectingApp-Client\src\app\_service\auth.service.ts" />
     <None Remove="ConnectingApp-Client\src\app\_service\auth.ts" />
@@ -41,11 +45,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ConnectingApp-Client\src\app\_guards\" />
     <Folder Include="ConnectingApp-Client\src\app\value\" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Update="ConnectingApp-Client\src\app\_resolvers\member-edit.resolver.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Update="ConnectingApp-Client\src\app\_resolvers\member-list.resolver.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Update="ConnectingApp-Client\src\app\_service\alertify.service.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

@@ -44,7 +44,7 @@ namespace ConnectingApp.API.Controllers
 
             // if user already exist or not
             if (await _repo.UserExist(creds.UserName))
-                return BadRequest("user already exist with this username");
+                return BadRequest("User already exist with this username");
 
             // now we create new user
             var newUser = new User
@@ -100,7 +100,7 @@ namespace ConnectingApp.API.Controllers
             return Ok(new
             {
                 token = tokenHandler.WriteToken(token)
-            }); ;
+            }); 
 
         }
     }

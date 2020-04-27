@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using ConnectingApp.API.Data;
@@ -53,6 +54,36 @@ namespace ConnectingApp.API.Controllers
             var mappedUser = _mapper.Map<UserDetailDto>(user);
             
             return Ok(mappedUser);
+        }
+
+        // update user
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto model)
+        {
+            // we need to match the id in route with the id of token i.e the logged in user id
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                // if id doesn't match then it will be unauthorized
+                return Unauthorized();
+            }
+
+            // else now first we get the user
+            var user = await _repo.GetUser(id);
+
+            // now map the updated values
+            // 1st arg is source 2nd is destination
+            _mapper.Map(model, user);
+
+            // no we check the changes
+            if (await _repo.SaveAll())
+            {
+                // if changes > 0
+                // we simply return no content
+                // we show pop up on front end that profile has been updated
+                return NoContent(); 
+            }
+            // if not then we'll throw the exception
+            throw new Exception($"Unable to update the user: {id}");
         }
     }
 }

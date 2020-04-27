@@ -19,7 +19,7 @@
       <a class="dropdown-toggle text-color" dropdownToggle>Welcome {{service.decodedToken.unique_name | uppercase}}</a>
 
       <div class="dropdown-menu mt-3 text-color bg-theme-color border-settings" *dropdownMenu>
-        <a class="dropdown-item"><i class="fa fa-user mr-2"></i>Edit Profile</a>
+        <a class="dropdown-item" [routerLink]="['/members/edit']"><i class="fa fa-user mr-2"></i>Edit Profile</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out mr-2"></i>Logout</a>
       </div>
