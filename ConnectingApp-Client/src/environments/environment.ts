@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // we are defining url here so that in publish we only have to change url in here not in ever service
+  apiUrl: 'http://localhost:5000/api/'  
 };
 
 /*

@@ -54,3 +54,84 @@ a {
 .nav-item.active {
   border: 2px solid #123654 !important;
 }
+
+
+/*for card*/
+.card:hover img.effects {
+  transform: scale(1.1,1.1);
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier();
+  opacity: 0.8;
+}
+
+.card img {
+  transform: scale(1.0,1.0);
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier();
+}
+
+.card-img-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.member-icons{
+    position: absolute;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+}
+.card-img-wrapper:hover .member-icons {
+    opacity: 1;
+    bottom: 0;
+}
+
+.animate {
+    transition: all 0.2s ease-in-out;
+}
+/*for card*/
+
+.border-settings {
+    border: 2px solid #123654 !important;
+}
+.noborder {
+    border: none !important;
+}
+/*
+.card-shadow {
+    box-shadow: 0 5px 10px rgba(154, 160, 185, 0.2), 0 15px 40px rgba(166, 173, 201, 0.8);
+}
+.card-shadow {
+  box-shadow: 0 0 10px 0 rgba(0,0,0, 0.3);
+  transition: box-shadow 500ms;
+}
+.card-shadow:hover {
+  box-shadow: 0 10px 50px 0 rgba(0,0,0, 0.5);
+}*/
+.card-shadow {
+    position: relative;
+    box-shadow: 0 0 10px 0 rgba(0,0,0, 0.3);
+}
+
+  .card-shadow:before {
+      position: absolute;
+      content: ' ';
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+
+      box-shadow: 0 10px 50px 0 rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 500ms;
+  }
+  .card-shadow:hover::before {
+    opacity: 1;
+    border-bottom-left-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+    box-shadow: 5px 5px 30px 2px #77bfc7;
+    border: 2px solid #123654
+  }

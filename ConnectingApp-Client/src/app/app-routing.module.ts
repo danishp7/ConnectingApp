@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { MemberListComponent } from './member-list/member-list.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
+import { MemberListResolver } from './_resolvers/member-list.resolver';
 
 
 const routes: Routes = [
@@ -22,8 +25,14 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      { path: 'members', component: MemberListComponent },
+      // as we are using resolver so we need to specify it here
+      // note that 'user' here must be matched at subscribing function in respective component
+      { path: 'members', component: MemberListComponent, resolve: { users: MemberListResolver } },
       { path: 'messages', component: MessagesComponent },
+
+      // as we are using resolver so we need to specify it here
+      // note that 'user' here must be matched at subscribing function in respective component
+      { path: 'members/:id', component: MemberDetailComponent, resolve: { user: MemberDetailResolver } },
       { path: 'userlist', component: UserListComponent }
     ]
   },
