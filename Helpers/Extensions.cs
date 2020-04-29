@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,24 @@ namespace ConnectingApp.API.Helpers
                 age--;
 
             return age;
+        }
+
+        // we'll send the pagination in header so 
+        public static void AddPagination(this HttpResponse response, int totalItems, int currentPage, int itemsPerPage, int totalPage)
+        {
+            // create new instance of paginationheader
+            var paginationHeader = new PaginationHeader(totalItems, currentPage, itemsPerPage, totalPage);
+
+            // 1st arg: this will be the ley
+            // 2nd arg: to send the paginationHeader object in string we use jsonconvert.serializeobject 
+
+            // first we convert header to camel case
+            var camelCase = new JsonSerializerSettings();
+            camelCase.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader, camelCase));
+
+            // now we add access allow header as well
+            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
     }
 }

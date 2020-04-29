@@ -1,4 +1,5 @@
-﻿using ConnectingApp.API.Models;
+﻿using ConnectingApp.API.Helpers;
+using ConnectingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,9 +38,13 @@ namespace ConnectingApp.API.Data
 
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            return await _context.Users.Include(p => p.Photos).ToListAsync();
+            // we'll not convert the users into list now
+            var users = _context.Users.Include(p => p.Photos);
+
+            // we've created 'createasync' extension method will be take care of skip and take and then return tolist
+            return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<bool> SaveAll()

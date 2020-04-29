@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ConnectingApp.API.Data;
 using ConnectingApp.API.Dtos;
+using ConnectingApp.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,13 +31,18 @@ namespace ConnectingApp.API.Controllers
         }
 
         // get all users
+        // as we are sending pagination ifo in header so we need to pass params inside this method
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _repo.GetUsers();
+            var users = await _repo.GetUsers(userParams);
             
             // to map in dto
             var mappedUsers = _mapper.Map<IEnumerable<UserDto>>(users);
+
+            // now we need to set the headers
+            // and we just created this extension method to add pagination 
+            Response.AddPagination(users.TotalCount, users.PageNumber, users.PageSize, users.TotalPages);
             return Ok(mappedUsers);
         }
 

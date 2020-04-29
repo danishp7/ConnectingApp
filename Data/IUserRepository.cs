@@ -1,4 +1,5 @@
-﻿using ConnectingApp.API.Models;
+﻿using ConnectingApp.API.Helpers;
+using ConnectingApp.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace ConnectingApp.API.Data
         Task<User> GetUser(int id);
 
         // to get all users
-        Task<IEnumerable<User>> GetUsers();
+        // now we are adding pagination so we'll pass userparams in method
+        // and return type of the func would be PagedList
+        Task<PagedList<User>> GetUsers(UserParams userParams);
     }
 }
