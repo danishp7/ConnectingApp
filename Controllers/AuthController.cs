@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using ConnectingApp.API.Data;
 using ConnectingApp.API.Dtos;
 using ConnectingApp.API.Models;
@@ -21,11 +22,13 @@ namespace ConnectingApp.API.Controllers
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
             _repo = repo;
             _config = config;
+            _mapper = mapper;
         }
 
         // post register method
@@ -47,13 +50,19 @@ namespace ConnectingApp.API.Controllers
                 return BadRequest("User already exist with this username");
 
             // now we create new user
-            var newUser = new User
-            {
-                UserName = creds.UserName
-            };
+            var newUser = _mapper.Map<User>(creds);
+
+
             var userCreated = await _repo.Register(newUser, creds.Password);
 
-            return StatusCode(201);
+            var userToReturn = _mapper.Map<UserDetailDto>(userCreated);
+
+
+            // we'll return the created user with route
+            // getuser in string is name of the method of GetUser in usercontroller [http({id}, name="GetUser")]
+            // to pass id we use GetUser method
+            // we have to return detaildto object so we first mapped user to detail and then pass it as 3rd arg
+            return CreatedAtRoute("GetUser", new { Controller = "User", id = userCreated.Id }, userToReturn);
         }
 
         [HttpPost("login")]

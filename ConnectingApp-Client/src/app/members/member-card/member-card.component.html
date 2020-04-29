@@ -1,6 +1,6 @@
 <div class="card mt-4 card-shadow noborder rounded">
   <div class="card-img-wrapper">
-    <img class="card-img-top effects" src="{{userFromMemberList.photoUrl}}" alt="{{userFromMemberList.knownAs}}" />
+    <img class="card-img-top effects" src="{{userFromMemberList.photoUrl || '../../../assets/user.png' }}" alt="{{userFromMemberList.knownAs}}" />
     <ul class="list-inline member-icons animate text-center">
       <li class="list-inline-item"><button class="btn btn-info" [routerLink]="['/members/' , userFromMemberList.id]"><i class="fa fa-user"></i></button></li>
       <li class="list-inline-item"><button class="btn btn-info"><i class="fa fa-heart text-danger"></i></button></li>

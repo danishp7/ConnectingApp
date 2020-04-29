@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators'
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
+import { User } from '../shared/user';
 
 @Injectable({
   providedIn: "root"
@@ -40,8 +41,8 @@ export class AuthService {
 
   // register method
   // as this method return observalble so we need to subscribe this method in our register call
-  register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model);
+  register(user: User) {
+    return this.http.post(this.baseUrl + 'register', user);
   }
 
   // to verify the token from local storage is expired or not

@@ -22,6 +22,9 @@ namespace ConnectingApp.API.Helpers
 
             // for update user
             CreateMap<UserForUpdateDto, User>();
+
+            // for register
+            CreateMap<AuthDto, User>();
         }
     }
 }

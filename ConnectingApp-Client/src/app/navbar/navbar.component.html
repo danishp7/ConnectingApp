@@ -15,6 +15,7 @@
     </ul>
 
     <div class="dropdown" *ngIf="IsLoggedIn()" dropdown>
+      
       <!-- unique name came from jwt token so we show the user with name that he/she is logged in-->
       <a class="dropdown-toggle text-color" dropdownToggle>Welcome {{service.decodedToken.unique_name | uppercase}}</a>
 
