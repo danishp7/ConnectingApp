@@ -19,5 +19,15 @@ namespace ConnectingApp.API.Helpers
             get { return pageSize; }
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
         }
+
+        // to not get the user in list which is logged in
+        public int UserId { get; set; }
+
+        // to set the gender filter
+        public string Gender { get; set; }
+
+        // for age filter
+        public int MinAge { get; set; } = 7;
+        public int MaxAge { get; set; } = 99;
     }
 }

@@ -35,8 +35,28 @@ namespace ConnectingApp.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {
+            // first we get the logged in user
+            var loggedInUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+
+            // we need to set the current logged in user id to params id
+            // but first we get current logged in user
+            var loggedInUser = await _repo.GetUser(loggedInUserId);
+
+            // now we set the params id
+            userParams.UserId = loggedInUserId;
+                
+            // now we set the filter for gender 
+            // the opposite gender will be set based on the logged in user's gender
+            // gender and id where clause add in repo
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = loggedInUser.Gender == "male" ? "female" : "male";
+            }
+
             var users = await _repo.GetUsers(userParams);
-            
+
             // to map in dto
             var mappedUsers = _mapper.Map<IEnumerable<UserDto>>(users);
 

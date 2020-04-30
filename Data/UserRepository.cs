@@ -41,7 +41,26 @@ namespace ConnectingApp.API.Data
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
             // we'll not convert the users into list now
-            var users = _context.Users.Include(p => p.Photos);
+            var users = _context.Users.Include(p => p.Photos).AsQueryable();
+
+
+            users = users.Where(u => u.Id != userParams.UserId);
+            users = users.Where(u => u.Gender == userParams.Gender);
+
+
+            // we filter the age here
+            // if user doesnt specify about age in query string
+            // then min and max will be set to default value i.e 7 and 99
+            // otherwise we'll calculate min and max age
+            if (userParams.MinAge != 7 || userParams.MaxAge != 99)
+            {
+                var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+                var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+
+                // now we put where clause to filter
+                users = users.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+            }
+
 
             // we've created 'createasync' extension method will be take care of skip and take and then return tolist
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
