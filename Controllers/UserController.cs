@@ -42,7 +42,7 @@ namespace ConnectingApp.API.Controllers
 
             // now we need to set the headers
             // and we just created this extension method to add pagination 
-            Response.AddPagination(users.TotalCount, users.PageNumber, users.PageSize, users.TotalPages);
+            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
             return Ok(mappedUsers);
         }
 

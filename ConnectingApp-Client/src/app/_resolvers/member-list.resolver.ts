@@ -10,11 +10,15 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class MemberListResolver implements Resolve<User[]> {
+  // set the default values on page loading
+  pageNumber: number = 1;
+  pageSize: number = 5;
+
   constructor(private userService: UserService, private alertify: AlertifyService, private router: Router) { }
 
   // now we are using this method to retrieve the data insteead of loadUser
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-    return this.userService.getUsers()
+    return this.userService.getUsers(this.pageNumber, this.pageSize)
       .pipe(
         catchError(error => {
           this.alertify.error('Problem occur in retrieving users');

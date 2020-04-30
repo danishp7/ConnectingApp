@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { User } from '../shared/user';
+import { PaginatedResult } from '../shared/pagination';
+import { map } from 'rxjs/operators';
 
 // to send the jwt token
 // later we'll see the automatic way to send the token to server
@@ -21,11 +23,40 @@ export class UserService {
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  // to get all the users
-  getUsers(): Observable<User[]> {
+  // to get all the users we need to send the pagenumber and page size as optional parameters in the func
+  getUsers(page?, itemsPerPage?): Observable<PaginatedResult<User[]>> {
 
-    // now we'll pass the header in get method
-    return this.http.get<User[]>(this.baseUrl + 'user');
+    // first we need to store pagination values
+    const pagination: PaginatedResult<User[]> = new PaginatedResult<User[]>();
+
+    // 2nd we have to sent httpparams in the method 
+    let params = new HttpParams();
+
+    // now we check if the parameters are not null then we append them to our paramas
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    //now we send these params into method
+
+    return this.http.get<User[]>(this.baseUrl + 'user', { observe: 'response', params })
+      .pipe(
+        // we need to store the respone cz in response we have pagination and list of items
+        map(response => {
+          pagination.result = response.body; // the body contain the list of items
+
+          // now we need to set the headers
+          // first we check if the header value is null or not
+          if (response.headers.get('Pagination') != null) {
+            // to convert the serialize string back to json onject we use json.parse
+            pagination.pagination = JSON.parse(response.headers.get('Pagination')); 
+          }
+          return pagination;
+        })
+    );
+
+    // now we need to edit the member list resolver and memberlist.component.ts
   }
 
   // to get specific user

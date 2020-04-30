@@ -17,7 +17,7 @@ namespace ConnectingApp.API.Helpers
         public int TotalCount { get; set; }
 
         // page number 
-        public int PageNumber { get; set; }
+        public int CurrentPage { get; set; }
 
         // page size
         public int PageSize { get; set; }
@@ -26,12 +26,15 @@ namespace ConnectingApp.API.Helpers
         public int TotalPages { get; set; }
 
         // we set the items in constructor
-        public PagedList(List<T> items,int totalCount, int pageNumber, int pageSize, int totalPages)
+        public PagedList(List<T> items,int totalCount, int pageNumber, int pageSize)
         {
             TotalCount = totalCount;
-            PageNumber = pageNumber;
+            CurrentPage = pageNumber;
             PageSize = pageSize;
-            TotalPages = totalPages;
+
+            // now we can calculate the total pages
+            // total pages will be (total no of items / page size)
+            TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
             // we also addrange method to add the list of items
             this.AddRange(items);
@@ -43,12 +46,9 @@ namespace ConnectingApp.API.Helpers
         {
             // source is list of items i.e users or messages
             // first we count the total items
-            var totalCount = await source.CountAsync();
+            var count = await source.CountAsync();
 
-            // now we can calculate the total pages
-            // total pages will be (total no of items / page size)
-            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-
+            
             // now we filter the items
             // if pageNumber is 1
             // pagesize is 5
@@ -60,7 +60,7 @@ namespace ConnectingApp.API.Helpers
             var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
             // now we return the instance of class
-            return new PagedList<T>(items, totalCount, pageNumber, pageSize, totalPages);
+            return new PagedList<T>(items, count, pageNumber, pageSize);
         }
     }
 }

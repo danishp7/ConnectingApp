@@ -33,10 +33,11 @@ namespace ConnectingApp.API.Helpers
         }
 
         // we'll send the pagination in header so 
-        public static void AddPagination(this HttpResponse response, int totalItems, int currentPage, int itemsPerPage, int totalPage)
+        public static void AddPagination(this HttpResponse response,
+            int currentPage, int itemsPerPage, int totalItems, int totalPages)
         {
             // create new instance of paginationheader
-            var paginationHeader = new PaginationHeader(totalItems, currentPage, itemsPerPage, totalPage);
+            var paginationHeader = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
 
             // 1st arg: this will be the ley
             // 2nd arg: to send the paginationHeader object in string we use jsonconvert.serializeobject 

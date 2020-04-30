@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ConnectingApp-Client\src\app\shared\pagination.ts" />
     <None Remove="ConnectingApp-Client\src\app\_guards\prevent-unsaved-changes.guard.ts" />
     <None Remove="ConnectingApp-Client\src\app\_resolvers\member-detail.resolver.ts" />
     <None Remove="ConnectingApp-Client\src\app\_resolvers\member-edit.resolver.ts" />
