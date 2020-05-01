@@ -24,7 +24,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   // to get all the users we need to send the pagenumber and page size as optional parameters in the func
-  getUsers(page?, itemsPerPage?): Observable<PaginatedResult<User[]>> {
+  getUsers(page?, itemsPerPage?, userParams?/* for age or gender filter*/): Observable<PaginatedResult<User[]>> {
 
     // first we need to store pagination values
     const pagination: PaginatedResult<User[]> = new PaginatedResult<User[]>();
@@ -36,6 +36,17 @@ export class UserService {
     if (page != null && itemsPerPage != null) {
       params = params.append('pageNumber', page);
       params = params.append('pageSize', itemsPerPage);
+    }
+
+    // we also check for the user params if they are null or not
+    // if user enter any value for age and gender etc
+    // if yes then we will set that values
+    if (userParams != null) {
+      params = params.append('minAge', userParams.minAge);
+      params = params.append('maxAge', userParams.maxAge);
+      params = params.append('gender', userParams.gender);
+      params = params.append('orderBy', userParams.orderBy);
+
     }
 
     //now we send these params into method

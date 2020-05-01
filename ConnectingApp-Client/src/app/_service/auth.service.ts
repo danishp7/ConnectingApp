@@ -33,7 +33,7 @@ export class AuthService {
             // to decode the token, it will decode the token and get the data present in the header
             // we want the 'unique_name' property so that we can show on nav 
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
-            console.log(this.decodedToken);
+            console.log(this.decodedToken.nameid);
           }
         })
       );

@@ -10,6 +10,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { JwtModule } from '@auth0/angular-jwt'
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/value.component';
@@ -54,6 +55,7 @@ export function getToken() {
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
     PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
     NgxGalleryModule,
     JwtModule.forRoot({
       config: {

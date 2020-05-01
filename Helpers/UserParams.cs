@@ -29,5 +29,8 @@ namespace ConnectingApp.API.Helpers
         // for age filter
         public int MinAge { get; set; } = 7;
         public int MaxAge { get; set; } = 99;
+
+        // for sorting
+        public string OrderBy { get; set; }
     }
 }
