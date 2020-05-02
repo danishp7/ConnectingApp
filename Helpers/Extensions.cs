@@ -50,5 +50,14 @@ namespace ConnectingApp.API.Helpers
             // now we add access allow header as well
             response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
+
+        // to sent the headers for like functionality
+        public static void AddLikeHeader(this HttpResponse response)
+        {
+
+            response.Headers.Add("Content-Type", "application/json");
+            response.Headers.Add("Accept", "application/json");
+            response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
+        }
     }
 }

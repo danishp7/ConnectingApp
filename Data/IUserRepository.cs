@@ -29,5 +29,11 @@ namespace ConnectingApp.API.Data
         // now we are adding pagination so we'll pass userparams in method
         // and return type of the func would be PagedList
         Task<PagedList<User>> GetUsers(UserParams userParams);
+
+        // to get the like 
+        // to check if the user has liked other user or not
+        // userid = likerid
+        // recipientid = likeeid
+        Task<Like> GetLike(int userId, int recipientId);
     }
 }

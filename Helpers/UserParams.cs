@@ -32,5 +32,9 @@ namespace ConnectingApp.API.Helpers
 
         // for sorting
         public string OrderBy { get; set; }
+
+        // to set the likee and liker
+        public bool Likers { get; set; }
+        public bool Likees { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using AutoMapper;
 using ConnectingApp.API.Data;
 using ConnectingApp.API.Dtos;
 using ConnectingApp.API.Helpers;
+using ConnectingApp.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -111,5 +112,51 @@ namespace ConnectingApp.API.Controllers
             // if not then we'll throw the exception
             throw new Exception($"Unable to update the user: {id}");
         }
+
+        // to like other user
+        [HttpPost("{id}/like/{recipientId}")]
+        public async Task<IActionResult> LikeUser(int id, int recipientId)
+        {
+            // first authorize the user
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                // if id doesn't match then it will be unauthorized
+                return Unauthorized();
+            }
+
+            // now get the like
+            var like = await _repo.GetLike(id, recipientId);
+
+            // if like is not null then the loggedin user has already liked user with recipientId
+            if (like != null)
+                return BadRequest("You have already liked this user");
+
+            // now check if the recipient user exist or not
+            if (await _repo.GetUser(recipientId) == null)
+                return NotFound("The user does not exist");
+
+            // now the recipient exist, get like is null so we can create new like
+            like = new Like
+            {
+                LikerId = id,
+                LikeeId = recipientId
+            };
+
+            Response.AddLikeHeader();
+
+            // now add this like
+            //  it is not async, it will only store in memory and not add in db
+            _repo.Add<Like>(like);
+
+            // to save in db
+            if (await _repo.SaveAll())
+                return Ok("You have liked this user!");
+
+            // else
+            return BadRequest("Failed to like this user...");
+        }
+
+
+
     }
 }

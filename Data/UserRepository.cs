@@ -27,6 +27,13 @@ namespace ConnectingApp.API.Data
             _context.Remove(entity);
         }
 
+        public async Task<Like> GetLike(int userId, int recipientId)
+        {
+            // if user hasnt already like other user then it'll return null 
+            // other wise like object which contain likeeid and likerid
+            return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == recipientId);
+        }
+
         public async Task<User> GetUser(int id)
         {
             // eager loading i.e include to get all the photos associated with user
@@ -46,6 +53,22 @@ namespace ConnectingApp.API.Data
 
             users = users.Where(u => u.Id != userParams.UserId);
             users = users.Where(u => u.Gender == userParams.Gender);
+
+            // to get the list of likers
+            // all the users who have liked the currently logged in user
+            if (userParams.Likers)
+            {
+                var userLikers = await GetUserLikes(userParams.UserId, userParams.Likers);
+                users = users.Where(u => userLikers.Contains(u.Id));
+            }
+
+            // to get the list of likees
+            // all the users which currently logged in user liked
+            if (userParams.Likees)
+            {
+                var userLikees = await GetUserLikes(userParams.UserId, userParams.Likers);
+                users = users.Where(u => userLikees.Contains(u.Id));
+            }
 
 
             // we filter the age here
@@ -77,6 +100,31 @@ namespace ConnectingApp.API.Data
 
             // we've created 'createasync' extension method will be take care of skip and take and then return tolist
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+        }
+
+        // to get the list of int based on likee and likers 
+        // id = currently logged in user id
+        private async Task<IEnumerable<int>> GetUserLikes(int id, bool likers)
+        {
+            // we'll return either list of liked users or
+            // the list of user who liked currently logged in user
+
+            // get the user
+            var user = await _context.Users.
+                Include(x => x.Likers).
+                Include(x => x.Likees).
+                FirstOrDefaultAsync(u => u.Id == id);
+
+            // now check if likers is true
+            // it means we'll return the list of users who like currently logged in user
+            if (likers)
+                return user.Likers.
+                    Where(u => u.LikeeId == id /*it means like hone wala loggedin user hai*/).
+                    Select(i => i.LikerId /*jinhon ne like kiya un ki id chahiye int me*/);
+
+            return user.Likees.
+                Where(u => u.LikerId == id /*like krne wala loggedin user hai*/).
+                Select(i => i.LikeeId /*jo users liked hue hn un ki ids int me*/);    
         }
 
         public async Task<bool> SaveAll()

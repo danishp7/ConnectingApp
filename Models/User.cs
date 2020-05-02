@@ -22,5 +22,9 @@ namespace ConnectingApp.API.Models
         public string City { get; set; }
         public string Counntry { get; set; }
         public ICollection<Photo> Photos { get; set; }
+
+        // for like entity user must have both the liker collection and likee collection
+        public ICollection<Like> Likers { get; set; }
+        public ICollection<Like> Likees { get; set; }
     }
 }

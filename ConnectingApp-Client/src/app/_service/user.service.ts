@@ -15,6 +15,16 @@ import { map } from 'rxjs/operators';
 //};
 // now we need to send this as we've sent the token using jwt module
 
+const headerValues = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Access-Control-Allow-Headers': 'Content-Type'
+};
+
+const headerOptions = {
+  headers: new Headers(headerValues)
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +34,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   // to get all the users we need to send the pagenumber and page size as optional parameters in the func
-  getUsers(page?, itemsPerPage?, userParams?/* for age or gender filter*/): Observable<PaginatedResult<User[]>> {
+  getUsers(page?, itemsPerPage?, userParams?/* for age or gender filter*/, likesParam? /*for likes param i.e likers=true or likee=true*/): Observable<PaginatedResult<User[]>> {
 
     // first we need to store pagination values
     const pagination: PaginatedResult<User[]> = new PaginatedResult<User[]>();
@@ -47,6 +57,16 @@ export class UserService {
       params = params.append('gender', userParams.gender);
       params = params.append('orderBy', userParams.orderBy);
 
+    }
+
+    // to check what is inside likeparams
+    // likeParams ki default value ko hm ListResolver me set karen ge
+    if (likesParam === 'Likers') {
+      params = params.append('likers', 'true');
+    }
+
+    if (likesParam === 'Likees') {
+      params = params.append('likees', 'true');
     }
 
     //now we send these params into method
@@ -79,4 +99,13 @@ export class UserService {
   UpdateUser(id: number, user: User) {
     return this.http.put(this.baseUrl + 'user/' + id, user);
   }
+
+  
+
+  // to like someone
+  sendLike(id: number, recipientId: number) {
+    return this.http.post(this.baseUrl + 'user/' + id + '/like/' + recipientId, headerOptions);
+  }
+
+
 }

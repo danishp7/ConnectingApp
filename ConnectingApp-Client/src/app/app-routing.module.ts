@@ -12,6 +12,7 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { ListsResolver } from './_resolvers/lists.resolver';
 
 
 const routes: Routes = [
@@ -40,7 +41,7 @@ const routes: Routes = [
       // as we are using resolver so we need to specify it here
       // note that 'user' here must be matched at subscribing function in respective component
       { path: 'members/:id', component: MemberDetailComponent, resolve: { user: MemberDetailResolver } },
-      { path: 'userlist', component: UserListComponent }
+      { path: 'userlist', component: UserListComponent, resolve: { users: ListsResolver } }
     ]
   },
 
