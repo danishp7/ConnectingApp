@@ -15,6 +15,11 @@ using Microsoft.Extensions.Logging;
 
 namespace ConnectingApp.API.Controllers
 {
+    // we can add filters in function, class and even in app level
+    // but we'll user our filter in class level
+    // now whenever any function of this class called, this filter will be applied
+
+    [ServiceFilter(typeof(LogUserActivity))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]

@@ -14,7 +14,10 @@
 
   <ItemGroup>
     <None Remove="ConnectingApp-Client\src\app\shared\pagination.ts" />
+    <None Remove="ConnectingApp-Client\src\app\timeAgo\time-ago.module.ts" />
+    <None Remove="ConnectingApp-Client\src\app\timeAgo\time-ago.pipe.ts" />
     <None Remove="ConnectingApp-Client\src\app\_guards\prevent-unsaved-changes.guard.ts" />
+    <None Remove="ConnectingApp-Client\src\app\_resolvers\lists.resolver.ts" />
     <None Remove="ConnectingApp-Client\src\app\_resolvers\member-detail.resolver.ts" />
     <None Remove="ConnectingApp-Client\src\app\_resolvers\member-edit.resolver.ts" />
     <None Remove="ConnectingApp-Client\src\app\_resolvers\member-list.resolver.ts" />
