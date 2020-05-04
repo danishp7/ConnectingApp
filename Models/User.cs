@@ -26,5 +26,14 @@ namespace ConnectingApp.API.Models
         // for like entity user must have both the liker collection and likee collection
         public ICollection<Like> Likers { get; set; }
         public ICollection<Like> Likees { get; set; }
+
+        // for msg entity
+        // relation is
+        // 1 user can send * msgs to 1 user
+        // * msgs can be recieved by 1 user
+        // so * msg * users
+        public ICollection<Message> MessagesSent { get; set; }
+        public ICollection<Message> MessagesReceived { get; set; }
+
     }
 }

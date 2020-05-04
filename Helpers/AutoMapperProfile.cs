@@ -25,6 +25,16 @@ namespace ConnectingApp.API.Helpers
 
             // for register
             CreateMap<AuthDto, User>();
+
+            // for messages
+            CreateMap<MessageCreatingDto, Message>().ReverseMap();
+
+            // for return messages
+            CreateMap<Message, MessageToReturn>()
+                .ForMember(d => d.SenderPhotoUrl,
+                opt => opt.MapFrom(src => src.Sender.Photos.FirstOrDefault(p => p.IsMain).Url))
+                .ForMember(d => d.RecipientPhotoUrl,
+                opt => opt.MapFrom(src => src.Recipient.Photos.FirstOrDefault(p => p.IsMain).Url));
         }
     }
 }

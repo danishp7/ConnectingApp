@@ -35,5 +35,15 @@ namespace ConnectingApp.API.Data
         // userid = likerid
         // recipientid = likeeid
         Task<Like> GetLike(int userId, int recipientId);
+
+        // messages methods
+
+
+        // to get a single msg
+        Task<Message> GetMessage(int messageId);
+        Task<PagedList<Message>> GetMessagesForUsers(MessageParams messageParams);
+
+        // this will be the conversation b/w two users
+        Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId);
     }
 }

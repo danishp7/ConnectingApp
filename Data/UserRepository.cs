@@ -132,5 +132,63 @@ namespace ConnectingApp.API.Data
             // if it equals to 0 it means nothing has been saved
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<Message> GetMessage(int messageId)
+        {
+            return await _context.Messages.FirstOrDefaultAsync(m => m.Id == messageId);
+        }
+
+        public async Task<PagedList<Message>> GetMessagesForUsers(MessageParams messageParams)
+        {
+            // theniclude cz photo is nested prop of user
+            // we get all the messages
+            var messages = _context.Messages.Include(u => u.Sender).ThenInclude(p => p.Photos)
+                                            .Include(u => u.Recipient).ThenInclude(p => p.Photos)
+                                            .AsQueryable();
+
+            // now we filter them based on inbox, outbox or unread
+            switch (messageParams.MessageContainer)
+            {
+                // inbox means that reciever will be currently logged in user so recipid = userid
+                case "Inbox":
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId);
+                    break;
+                // outbox means that reciever will be another user, and sender will be loggedin user so senderid = userid
+                case "Outbox":
+                    messages = messages.Where(u => u.SenderId == messageParams.UserId);
+                    break;
+                default: // for unread msg, it will be inbox but with unread status
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead == false);
+                    break;
+            }
+
+            //now we'll return with descendingorder, i.e newest msgs first
+            messages = messages.OrderByDescending(m => m.MessageSent);
+
+            // now return the object
+            return await PagedList<Message>.CreateAsync(/*source or entity*/ messages,
+                /*pagenumber*/ messageParams.PageNumber, /*page size*/ messageParams.PageSize);
+        }
+
+        public async Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId)
+        {
+            var messages = await _context.Messages.Include(u => u.Sender).ThenInclude(p => p.Photos)
+                .Include(u => u.Recipient).ThenInclude(p => p.Photos)
+
+                // to get the conversation between 2 user
+                // before || is inbox 
+                // after || is outbox
+                .Where(m => m.RecipientId == userId && m.SenderId == recipientId ||
+                m.RecipientId == recipientId && m.SenderId == userId)
+
+                // now we'll return the newest conversation
+                .OrderByDescending(m => m.MessageSent)
+                .ToListAsync();
+
+
+            return messages;
+        }
+
+        
     }
 }
