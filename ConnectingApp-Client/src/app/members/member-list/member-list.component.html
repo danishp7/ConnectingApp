@@ -17,7 +17,7 @@
 
         <div class="form-group px-2">
           <label for="gender">Show: </label>
-          <select class="form-control ml-1" id="gender" name="gender">
+          <select class="form-control ml-1" id="gender" [(ngModel)]="userParams.gender" name="gender">
             <option *ngFor="let gender of genderList" [value]="gender.value">
               {{gender.display}}
             </option>
@@ -35,7 +35,7 @@
                     >Last Active</button>
             <button type="button" name="orderBy" class="btn btn-info"
                     [(ngModel)]="userParams.orderBy"
-                    btnRadio="lastActive"
+                    btnRadio="created"
                     (click)="loadUsers()"
                     >New Members</button>
           </div>

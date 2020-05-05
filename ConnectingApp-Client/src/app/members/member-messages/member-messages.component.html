@@ -1,0 +1,55 @@
+<div class="card member-messages-card">
+  <div class="card-body">
+    <div *ngIf="messages?.length === 0">
+      <p>no message here...</p>
+    </div>
+
+    <ul class="chat">
+      <li *ngFor="let message of messages">
+        <!--to me-->
+        <div *ngIf="message.senderId == recipientId">
+          <span class="chat-img float-left">
+            <img src="{{message.senderPhotoUrl || '../../../assets/user.png'}}" class="rounded-circle" style="max-height:50px;" />
+          </span>
+          <div class="chat-body">
+            <div class="header">
+              <strong class="text-color">{{message.senderUserName}}</strong>
+              <small class="text-muted float-right">
+                <span class="fa fa-clock-o">{{message.messageSent | timeAgo}}</span>
+              </small>
+            </div>
+            <p class="text-color">{{message.content}}</p>
+          </div>
+        </div>
+        <!--to them-->
+        <div *ngIf="message.senderId != recipientId">
+          <span class="chat-img float-right">
+            <img src="{{message.senderPhotoUrl || '../../../assets/user.png'}}" class="rounded-circle" style="max-height:50px;" />
+          </span>
+          <div class="chat-body">
+            <div class="header">
+              <small class="text-muted float-right">
+                <span class="fa fa-clock-o mr-1">{{message.messageSent | timeAgo}}</span>
+                <span class="text-danger" *ngIf="!message.isRead">(not seen)</span>
+                <span class="text-color" *ngIf="message.isRead">(seen {{message.dateRead | timeAgo}})</span>
+              </small>
+              <strong class="text-color">{{message.senderUserName}}</strong>
+
+            </div>
+            <p class="text-color">{{message.content}}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <form #msgForm="ngForm" (ngSubmit)="msgForm.valid && sendMessage()">
+      <div class="input-group">
+        <input type="text" class="form-control input-sm" [(ngModel)]="newMessage.content" name="content" placeholder="Type a Message" />
+        <div class="input-group-append">
+          <button class="btn btn-info" [disabled]="!msgForm.valid"><i class="fa fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

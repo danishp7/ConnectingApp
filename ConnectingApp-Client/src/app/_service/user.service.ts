@@ -41,6 +41,7 @@ export class UserService {
 
     // 2nd we have to sent httpparams in the method 
     let params = new HttpParams();
+    
 
     // now we check if the parameters are not null then we append them to our paramas
     if (page != null && itemsPerPage != null) {

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../shared/user';
 import { UserService } from '../../_service/user.service';
 import { AlertifyService } from '../../_service/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryImage, NgxGalleryOptions, NgxGalleryAnimation } from 'ngx-gallery-9';
+import { TabsetComponent } from 'ngx-bootstrap/tabs/public_api';
 
 @Component({
   selector: 'app-member-detail',
@@ -11,6 +12,9 @@ import { NgxGalleryImage, NgxGalleryOptions, NgxGalleryAnimation } from 'ngx-gal
   styleUrls: ['../../shared/site.css']
 })
 export class MemberDetailComponent implements OnInit {
+
+  // to set the tab id
+  @ViewChild('tabs', { static: true }) memberTabs: TabsetComponent;
 
   // to use the gallery options and we set these values in ngOnInit
   galleryOptions: NgxGalleryOptions[];
@@ -28,6 +32,11 @@ export class MemberDetailComponent implements OnInit {
       this.user = data['user']; 
     });
 
+    // after clicking the message, to directly go to message tab
+    this.route.queryParams.subscribe(params => {
+      const selectedTab = params['tab'];
+      this.memberTabs.tabs[selectedTab > 0 ? selectedTab : 0].active = true;
+    });
 
     // to set the photo gallery
     this.galleryOptions = [
@@ -58,6 +67,11 @@ export class MemberDetailComponent implements OnInit {
     return imgUrls;
   }
 
+  // to set the id of tabs
+  // we call this method on message button
+  selectTab(id: number) {
+    this.memberTabs.tabs[id].active = true;
+  }
 
   
   //loadUser() {

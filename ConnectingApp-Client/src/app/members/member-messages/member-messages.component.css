@@ -1,0 +1,4 @@
+.card.member-messages-card {
+    overflow-y: auto;
+    height: 400px;
+}

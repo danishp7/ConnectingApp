@@ -13,6 +13,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/message.resolver';
 
 
 const routes: Routes = [
@@ -32,7 +33,7 @@ const routes: Routes = [
       // as we are using resolver so we need to specify it here
       // note that 'user' here must be matched at subscribing function in respective component
       { path: 'members', component: MemberListComponent, resolve: { users: MemberListResolver } },
-      { path: 'messages', component: MessagesComponent },
+      { path: 'messages', component: MessagesComponent, resolve: { messages: MessagesResolver } },
 
       // send the member edit reoslver in this route
       // if user go to another url without saving changes then to prompt user we add canDeactivate

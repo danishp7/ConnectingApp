@@ -105,10 +105,12 @@ namespace ConnectingApp.API.Controllers
             // now we create the token that have jwt token value
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
+            var userToReturn = _mapper.Map<UserDto>(user);
             // now we simply return this with ok status
             return Ok(new
             {
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                body = userToReturn.Gender
             }); 
 
         }

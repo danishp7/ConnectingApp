@@ -151,14 +151,17 @@ namespace ConnectingApp.API.Data
             {
                 // inbox means that reciever will be currently logged in user so recipid = userid
                 case "Inbox":
-                    messages = messages.Where(u => u.RecipientId == messageParams.UserId);
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId &&
+                            u.RecipientDeleted == false);
                     break;
                 // outbox means that reciever will be another user, and sender will be loggedin user so senderid = userid
                 case "Outbox":
-                    messages = messages.Where(u => u.SenderId == messageParams.UserId);
+                    messages = messages.Where(u => u.SenderId == messageParams.UserId &&
+                            u.SenderDelted == false);
                     break;
                 default: // for unread msg, it will be inbox but with unread status
-                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead == false);
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead == false &&
+                            u.RecipientDeleted == false);
                     break;
             }
 
@@ -178,8 +181,8 @@ namespace ConnectingApp.API.Data
                 // to get the conversation between 2 user
                 // before || is inbox 
                 // after || is outbox
-                .Where(m => m.RecipientId == userId && m.SenderId == recipientId ||
-                m.RecipientId == recipientId && m.SenderId == userId)
+                .Where(m => m.RecipientId == userId && m.SenderId == recipientId && m.RecipientDeleted == false ||
+                m.RecipientId == recipientId && m.SenderId == userId && m.SenderDelted == false)
 
                 // now we'll return the newest conversation
                 .OrderByDescending(m => m.MessageSent)
