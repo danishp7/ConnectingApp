@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 @Component({
   selector: 'app-member-messages',
   templateUrl: './member-messages.component.html',
-  styleUrls: ['./member-messages.component.css']
+  styleUrls: ['../../shared/site.css']
 })
 export class MemberMessagesComponent implements OnInit {
 

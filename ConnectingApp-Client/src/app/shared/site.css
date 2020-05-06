@@ -11,6 +11,10 @@
   color: #123654 !important;
   font-weight: 900 !important;
 }
+.text-secondary-color {
+  color: #77bfc7 !important;
+  font-weight: 900 !important;
+}
 
 .no-bg {
   background-color: none;
@@ -135,3 +139,56 @@ a {
     box-shadow: 5px 5px 30px 2px #77bfc7;
     border: 2px solid #123654;
   }
+label {
+    color: #123654 !important;
+}
+/*paginatio*/
+.pagination {
+    border: 2px dotted #123654 !important;
+}
+
+.page-item.active .page-link {
+  color: #123654 !important;
+  background-color: #77bfc7 !important;
+  border-color: #123654 !important;
+}
+/*pagination*/
+/*list*/
+ul {
+    list-style-type: none;
+}
+.message-sent {
+  border: 2px solid #123654 !important;
+  background-color: #77bfc7;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-radius: 25px;
+  padding: 5px;
+}
+.message-receive {
+  color: #77bfc7 !important;
+  border: 2px solid #77bfc7 !important;
+  background-color: #123654;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-radius: 25px;
+  padding: 5px;
+}
+.mb-5-rem {
+    margin-bottom: 5rem !important;
+    
+}
+.border-bottom {
+  border-bottom: 1px solid #77bfc7 !important;
+}
+.member-messages-card {
+  overflow-y: auto;
+  height: 400px;
+}
+
+small, .small {
+  font-size: 80%;
+  font-weight: 900;
+}

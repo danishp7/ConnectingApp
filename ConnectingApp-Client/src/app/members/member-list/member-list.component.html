@@ -1,43 +1,67 @@
-<div class="text-center mt-3">
-  <h2>Your matches - {{pagination.totalItems}} found</h2>
-</div>
-<div class="container">
+<div class="container mt-5 ">
+
   <div class="row">
-    <div class="col-12">
-      <form class="form-inline" #filterForm="ngForm" (ngSubmit)="loadUsers()" novalidate>
-        <div class="form-group">
-          <label for="minAge">Age From</label>
-          <input type="number" class="form-control ml-1" id="minAge" [(ngModel)]="userParams.minAge" name="minAge">
+    <div class="col-11 offset-1">
+      <form class="row" #filterForm="ngForm" (ngSubmit)="loadUsers()" novalidate>
+
+        <div class="col-12 col-sm-12 col-md-2">
+            
+          <div class="row">
+            <h4 class="col-12 p-0 text-color text-left">Search by age:</h4>
+            <div class="form-group  col-12 col-sm-12 col-md-5 p-0 mr-3">
+              <label for="minAge" class="text-color pl-1">Age From</label>
+              <input type="number" class="form-control ml-1 input-text-settings" id="minAge" min="0" [(ngModel)]="userParams.minAge" name="minAge">
+            </div>
+            <div class="form-group col-12 col-sm-12 col-md-5 p-0">
+              <label for="maxAge" class="text-color pl-1">Age To</label>
+              <input type="number" class="form-control ml-1 input-text-settings" id="maxAge" min="0" [(ngModel)]="userParams.maxAge" name="maxAge">
+            </div>
+          </div>
         </div>
 
-        <div class="form-group px-2">
-          <label for="maxAge">Age To</label>
-          <input type="number" class="form-control ml-1" id="maxAge" [(ngModel)]="userParams.maxAge" name="maxAge">
-        </div>
+        
 
-        <div class="form-group px-2">
-          <label for="gender">Show: </label>
-          <select class="form-control ml-1" id="gender" [(ngModel)]="userParams.gender" name="gender">
-            <option *ngFor="let gender of genderList" [value]="gender.value">
-              {{gender.display}}
-            </option>
-          </select>
+        <div class="col-12 col-sm-12 col-md-3">
+          <div class="row">
+            <div class="form-group col-12">
+              <h4 class="col-12 p-0 text-color text-left">Search by gender:</h4>
+              <label for="gender" class="pl-1 text-color">Gender </label>
+              <select class="form-control ml-1 input-text-settings" id="gender" [(ngModel)]="userParams.gender" name="gender">
+                <option *ngFor="let gender of genderList" [value]="gender.value">
+                  {{gender.display}}
+                </option>
+              </select>
+            </div>
+          </div>
         </div>
-        <button type="submit" class="btn btn-info" >Apply Filters</button>
-        <button type="button" class="btn btn-danger" (click)="resetFilters()">Reset Filter</button>
-
-        <div class="col">
-          <div class="btn-group float-right">
+        <div class="col-12 col-sm-12 col-md-3">
+          <h4 class="col-12 p-0 text-color text-left">Filter options:</h4>
+          <label class="pl-1 text-color">Apply or Reset </label>
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-3 pr-0 mr-0">
+              <button type="submit" class="btn btn-info">Apply</button>
+            </div>
+            <div class="col-12 col-sm-12 col-md-3 pl-0 ml-0">
+              <button type="button" class="btn btn-danger" (click)="resetFilters()">Reset</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4">
+          <h4 class="col-12 p-0 text-color text-left">Order By:</h4>
+          <label >Rearrange members</label>
+          <div class="btn-group d-block">
             <button type="button" name="orderBy" class="btn btn-info"
                     [(ngModel)]="userParams.orderBy"
                     btnRadio="lastActive"
-                    (click)="loadUsers()"
-                    >Last Active</button>
+                    (click)="loadUsers()">
+              Last Active
+            </button>
             <button type="button" name="orderBy" class="btn btn-info"
                     [(ngModel)]="userParams.orderBy"
                     btnRadio="created"
-                    (click)="loadUsers()"
-                    >New Members</button>
+                    (click)="loadUsers()">
+              New Members
+            </button>
           </div>
         </div>
 
@@ -45,9 +69,14 @@
       <br>
     </div>
   </div>
-
-
   <div class="row">
+    <div class="col-11 offset-1">
+      <h2 class="text-color">Your Search matches - {{pagination.totalItems}} found</h2>
+    </div>
+  </div>
+
+
+  <div class="row offset-1">
     <div *ngFor="let user of users" class="col-6 col-sm-6 col-md-3 col-lg-2 col-xl-2">
       <app-member-card [userFromMemberList]="user"></app-member-card>
     </div>
@@ -56,7 +85,7 @@
 
 
 
-<div class="container mt-5">
+<div class="container">
   <div class="row mt-3">
     <div class="col-12 mt-3">
       <div class="d-flex justify-content-center mt-4">

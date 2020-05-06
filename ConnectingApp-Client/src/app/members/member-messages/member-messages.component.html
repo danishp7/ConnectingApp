@@ -1,42 +1,51 @@
-<div class="card member-messages-card">
-  <div class="card-body">
+<div class="card ">
+  <div class="card-body member-messages-card">
     <div *ngIf="messages?.length === 0">
-      <p>no message here...</p>
+      <p>no message here... type a text to start to the conversation!</p>
     </div>
 
-    <ul class="chat">
-      <li *ngFor="let message of messages">
+    <ul class="chat pl-2">
+      <li *ngFor="let message of messages" >
         <!--to me-->
-        <div *ngIf="message.senderId == recipientId">
-          <span class="chat-img float-left">
+        <div *ngIf="message.senderId == recipientId" class="mt-3 mb-5-rem">
+          <span class="received-chat-img float-left message-receive">
             <img src="{{message.senderPhotoUrl || '../../../assets/user.png'}}" class="rounded-circle" style="max-height:50px;" />
+            <span class="text-center d-block"><strong class="text-secondary-color">{{message.senderUserName}}</strong></span>
           </span>
-          <div class="chat-body">
-            <div class="header">
-              <strong class="text-color">{{message.senderUserName}}</strong>
-              <small class="text-muted float-right">
-                <span class="fa fa-clock-o">{{message.messageSent | timeAgo}}</span>
+
+          <div class="receive-chat-body">
+            <span class="text-color d-block text-right">
+
+              {{message.content}}
+              <i class="fa fa-reply ml-2"></i>
+            </span>
+            
+            <p class="text-secondary-color">
+              <small class="float-right">
+                <span><i class="fa fa-clock-o mr-2"></i>{{message.messageSent | timeAgo}}</span>
               </small>
-            </div>
-            <p class="text-color">{{message.content}}</p>
+            </p>
           </div>
         </div>
-        <!--to them-->
-        <div *ngIf="message.senderId != recipientId">
-          <span class="chat-img float-right">
-            <img src="{{message.senderPhotoUrl || '../../../assets/user.png'}}" class="rounded-circle" style="max-height:50px;" />
-          </span>
-          <div class="chat-body">
-            <div class="header">
-              <small class="text-muted float-right">
-                <span class="fa fa-clock-o mr-1">{{message.messageSent | timeAgo}}</span>
-                <span class="text-danger" *ngIf="!message.isRead">(not seen)</span>
-                <span class="text-color" *ngIf="message.isRead">(seen {{message.dateRead | timeAgo}})</span>
-              </small>
-              <strong class="text-color">{{message.senderUserName}}</strong>
+        <div *ngIf="message.senderId == recipientId" class="border-bottom">
 
-            </div>
-            <p class="text-color">{{message.content}}</p>
+        </div>
+        <!--to them-->
+        <div *ngIf="message.senderId != recipientId" class="message-sent mt-3 mb-3">
+          <span class="sent-chat-img float-right ">
+            
+            <img src="{{message.senderPhotoUrl || '../../../assets/user.png'}}" class="rounded-circle" style="max-height:50px;" />
+            <span class="text-center d-block"><strong class="text-color">{{message.senderUserName}}</strong></span>
+          </span>
+          <div class="sent-chat-body">
+            <span class="text-color"><i class="fa fa-paper-plane mr-2"></i>{{message.content}}</span>
+            <p class="text-color ">
+              <small>
+                <span><i class="fa fa-clock-o mr-1"></i>{{message.messageSent | timeAgo}}</span>
+                <span class="d-block" *ngIf="message.isRead">(seen {{message.dateRead | timeAgo}})</span>
+                <span class="text-danger mb-0 pb-0 ml-3 d-block" *ngIf="!message.isRead">(not seen)</span>
+              </small>
+            </p>
           </div>
         </div>
       </li>
